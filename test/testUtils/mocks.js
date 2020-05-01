@@ -1,15 +1,18 @@
 const nock = require('nock');
-const { properGetRatesResponse, getRatesResponseWithError } = require('./schemas/fixerServiceSchemas');
+const {
+  properGetExchangeRatesResponse,
+  getExchangeRatesRespWithError
+} = require('./schemas/fixerServiceSchemas');
 const {
   fixer: { apiBaseUrl }
 } = require('../../config').common;
 
-exports.mockGetRates = () =>
+exports.mockGetExchangeRates = () =>
   nock(apiBaseUrl)
     .get(/.latest*/)
-    .reply(200, properGetRatesResponse);
+    .reply(200, properGetExchangeRatesResponse);
 
-exports.mockGetRatesWithError = () =>
+exports.mockGetExchangeRatesWithError = () =>
   nock(apiBaseUrl)
     .get(/.latest*/)
-    .reply(200, getRatesResponseWithError);
+    .reply(200, getExchangeRatesRespWithError);

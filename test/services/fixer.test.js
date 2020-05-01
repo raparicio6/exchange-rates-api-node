@@ -1,13 +1,13 @@
-const { getRates } = require('../../app/services/fixer');
-const { mockGetRates, mockGetRatesWithError } = require('../testUtils/mocks');
+const { getExchangeRates } = require('../../app/services/fixer');
+const { mockGetExchangeRates, mockGetExchangeRatesWithError } = require('../testUtils/mocks');
 
 describe('Fixer Service GET /latest endpoint', () => {
   describe('Successful response', () => {
     let fixerApiResponse = null;
     const symbols = ['ARS', 'USD'];
     beforeAll(async done => {
-      mockGetRates();
-      fixerApiResponse = await getRates(symbols);
+      mockGetExchangeRates();
+      fixerApiResponse = await getExchangeRates(symbols);
       return done();
     });
 
@@ -34,8 +34,8 @@ describe('Fixer Service GET /latest endpoint', () => {
   describe('Response with error', () => {
     let fixerApiResponse = null;
     beforeAll(async done => {
-      mockGetRatesWithError();
-      fixerApiResponse = await getRates(['foo']);
+      mockGetExchangeRatesWithError();
+      fixerApiResponse = await getExchangeRates(['foo']);
       return done();
     });
 

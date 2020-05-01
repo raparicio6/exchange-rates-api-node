@@ -1,39 +1,39 @@
-const Rate = require('../../app/models/Rate');
+const ExchangeRate = require('../../app/models/ExchangeRate');
 const connectToDatabase = require('../../config/db');
 
-const exampleRate = {
+const exampleExchangeRate = {
   baseCurrency: 'EUR',
   targetCurrency: 'USD',
   originalValue: 50,
   feePercentage: 0.5
 };
 
-describe('Rate', () => {
+describe('ExchangeRate', () => {
   describe('create', () => {
-    let rate = null;
+    let exchangeRate = null;
     let connection = null;
     beforeAll(async done => {
       connection = await connectToDatabase();
-      await Rate.create(exampleRate);
-      rate = await Rate.findOne(exampleRate);
+      await ExchangeRate.create(exampleExchangeRate);
+      exchangeRate = await ExchangeRate.findOne(exampleExchangeRate);
       return done();
     });
     afterAll(done => connection.connection.db.dropDatabase().then(() => done()));
 
-    it('rate has baseCurrency property', () => {
-      expect(rate.baseCurrency).toBe('EUR');
+    it('exchangeRate has baseCurrency property', () => {
+      expect(exchangeRate.baseCurrency).toBe('EUR');
     });
-    it('rate has targetCurrency property', () => {
-      expect(rate.targetCurrency).toBe('USD');
+    it('exchangeRate has targetCurrency property', () => {
+      expect(exchangeRate.targetCurrency).toBe('USD');
     });
-    it('rate has originalValue property', () => {
-      expect(rate.originalValue).toBe(50);
+    it('exchangeRate has originalValue property', () => {
+      expect(exchangeRate.originalValue).toBe(50);
     });
-    it('rate has feePercentage property', () => {
-      expect(rate.feePercentage).toBe(0.5);
+    it('exchangeRate has feePercentage property', () => {
+      expect(exchangeRate.feePercentage).toBe(0.5);
     });
-    it('Rate collection has one document', async () => {
-      const count = await Rate.countDocuments();
+    it('ExchangeRate collection has one document', async () => {
+      const count = await ExchangeRate.countDocuments();
       expect(count).toBe(1);
     });
   });

@@ -1,4 +1,4 @@
-exports.properGetRatesResponse = {
+exports.properGetExchangeRatesResponse = {
   success: true,
   timestamp: 1588323908,
   base: 'EUR',
@@ -6,7 +6,7 @@ exports.properGetRatesResponse = {
   rates: { ARS: 73.143909, USD: 1.097647 }
 };
 
-exports.getRatesResponseWithError = {
+exports.getExchangeRatesRespWithError = {
   success: false,
   error: {
     code: 202,

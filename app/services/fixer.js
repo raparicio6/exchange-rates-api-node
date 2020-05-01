@@ -6,7 +6,7 @@ const { GET, EURO } = require('../constants');
 
 exports.SERVICE_NAME = 'Fixer service';
 
-exports.getRates = (symbols, base = EURO) => {
+exports.getExchangeRates = (symbols, base = EURO) => {
   const options = {
     method: GET,
     url: `${apiBaseUrl}/latest`,
