@@ -1,5 +1,5 @@
 const Rate = require('../../app/models/Rate');
-const startDatabase = require('../../config/db');
+const connectToDatabase = require('../../config/db');
 
 const exampleRate = {
   baseCurrency: 'EUR',
@@ -13,7 +13,7 @@ describe('Rate', () => {
     let rate = null;
     let connection = null;
     beforeAll(async done => {
-      connection = await startDatabase();
+      connection = await connectToDatabase();
       await Rate.create(exampleRate);
       rate = await Rate.findOne(exampleRate);
       return done();

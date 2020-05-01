@@ -1,12 +1,13 @@
 const app = require('./app');
 const config = require('./config');
-const startDatabase = require('./config/db');
+const connectToDatabase = require('./config/db');
+const logger = require('./app/logger');
 
 const port = config.common.api.port || 8080;
 
 Promise.resolve().then(() =>
-  startDatabase()
+  connectToDatabase()
     .then(() => app.start())
-    .then(() => console.log(`Listening on port: ${port}`))
-    .catch(console.error)
+    .then(() => logger.info(`Listening on port: ${port}`))
+    .catch(logger.error)
 );
