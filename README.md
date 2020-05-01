@@ -1,1 +1,1 @@
-# fixer-api-node
+# rates-api-node
