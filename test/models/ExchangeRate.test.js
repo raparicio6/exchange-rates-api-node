@@ -5,7 +5,7 @@ const exampleExchangeRate = {
   baseCurrency: 'EUR',
   targetCurrency: 'USD',
   originalValue: 50,
-  feePercentage: 0.5
+  feePercentage: 10
 };
 
 describe('ExchangeRate', () => {
@@ -30,7 +30,13 @@ describe('ExchangeRate', () => {
       expect(exchangeRate.originalValue).toBe(50);
     });
     it('exchangeRate has feePercentage property', () => {
-      expect(exchangeRate.feePercentage).toBe(0.5);
+      expect(exchangeRate.feePercentage).toBe(10);
+    });
+    it('exchangeRate has feeAmount property', () => {
+      expect(exchangeRate.feeAmount).toBe(5);
+    });
+    it('exchangeRate has valueWithFeeApplied property', () => {
+      expect(exchangeRate.valueWithFeeApplied).toBe(55);
     });
     it('ExchangeRate collection has one document', async () => {
       const count = await ExchangeRate.countDocuments();
