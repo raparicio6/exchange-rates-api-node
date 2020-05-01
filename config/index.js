@@ -36,7 +36,10 @@ const config = {
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD
     },
-    fixerApiBaseUrl: process.env.FIXER_API_BASE_URL
+    fixer: {
+      apiBaseUrl: process.env.FIXER_API_BASE_URL,
+      apiKey: process.env.FIXER_API_KEY
+    }
   }
 };
 

@@ -33,7 +33,7 @@ describe('Rate', () => {
       expect(rate.feePercentage).toBe(0.5);
     });
     it('Rate collection has one document', async () => {
-      const count = await Rate.count();
+      const count = await Rate.countDocuments();
       expect(count).toBe(1);
     });
   });
