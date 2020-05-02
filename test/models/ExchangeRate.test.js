@@ -1,12 +1,6 @@
 const ExchangeRate = require('../../app/models/ExchangeRate');
 const connectToDatabase = require('../../config/db');
-
-const exampleExchangeRate = {
-  baseCurrency: 'EUR',
-  targetCurrency: 'USD',
-  originalValue: 50,
-  feePercentage: 10
-};
+const { exampleExchangeRate } = require('../testUtils/schemas/exchangeRateSchemas');
 
 describe('ExchangeRate', () => {
   describe('create', () => {
@@ -31,6 +25,12 @@ describe('ExchangeRate', () => {
     });
     it('exchangeRate has feePercentage property', () => {
       expect(exchangeRate.feePercentage).toBe(10);
+    });
+    it('exchangeRate has createdAt property', () => {
+      expect(exchangeRate.createdAt).toStrictEqual(new Date('2020-05-01'));
+    });
+    it('exchangeRate has isLastRateOfPair property', () => {
+      expect(exchangeRate.isLastRateOfPair).toBe(true);
     });
     it('exchangeRate has feeAmount property', () => {
       expect(exchangeRate.feeAmount).toBe(5);

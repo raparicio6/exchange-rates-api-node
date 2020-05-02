@@ -6,7 +6,9 @@ const exchangeRateSchema = new mongoose.Schema(
     baseCurrency: String,
     targetCurrency: String,
     originalValue: Number,
-    feePercentage: Number
+    feePercentage: Number,
+    createdAt: Date,
+    isLastRateOfPair: Boolean
   },
   { toJSON: { virtuals: true } }
 );
