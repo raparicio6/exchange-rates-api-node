@@ -1,1 +1,1 @@
-# rates-api-node
+# exchange-rates-api-node
