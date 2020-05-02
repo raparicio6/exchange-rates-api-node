@@ -7,7 +7,7 @@ const exchangeRateSchema = new mongoose.Schema(
     targetCurrency: String,
     originalValue: Number,
     feePercentage: Number,
-    createdAt: Date,
+    collectedAt: Date,
     isLastRateOfPair: Boolean
   },
   { toJSON: { virtuals: true } }
@@ -16,7 +16,7 @@ const exchangeRateSchema = new mongoose.Schema(
 exchangeRateSchema.virtual('feeAmount').get(function() {
   return (this.originalValue * this.feePercentage) / 100;
 });
-exchangeRateSchema.virtual('valueWithFeeApplied').get(function() {
+exchangeRateSchema.virtual('valueAfterFeeApplied').get(function() {
   return this.originalValue + this.feeAmount;
 });
 

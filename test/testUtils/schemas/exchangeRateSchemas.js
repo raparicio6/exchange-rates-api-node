@@ -3,7 +3,7 @@ exports.exampleExchangeRate = {
   targetCurrency: 'USD',
   originalValue: 50,
   feePercentage: 10,
-  createdAt: '2020-05-01',
+  collectedAt: '2020-05-01',
   isLastRateOfPair: true
 };
 
@@ -14,7 +14,7 @@ exports.manyExchangeRates = [
     targetCurrency: 'USD',
     originalValue: 20,
     feePercentage: 5,
-    createdAt: '2020-05-02',
+    collectedAt: '2020-05-02',
     isLastRateOfPair: true
   },
   {
@@ -22,7 +22,7 @@ exports.manyExchangeRates = [
     targetCurrency: 'EUR',
     originalValue: 40,
     feePercentage: 15,
-    createdAt: '2020-05-01',
+    collectedAt: '2020-05-01',
     isLastRateOfPair: false
   }
 ];
@@ -34,18 +34,18 @@ exports.getExchangeRatesResponse = {
       targetCurrency: 'USD',
       originalValue: 50,
       feePercentage: 10,
-      createdAt: '2020-05-01T00:00:00.000Z',
+      collectedAt: '2020-05-01T00:00:00.000Z',
       feeAmount: 5,
-      valueWithFeeApplied: 55
+      valueAfterFeeApplied: 55
     },
     {
       baseCurrency: 'ARS',
       targetCurrency: 'USD',
       originalValue: 20,
       feePercentage: 5,
-      createdAt: '2020-05-02T00:00:00.000Z',
+      collectedAt: '2020-05-02T00:00:00.000Z',
       feeAmount: 1,
-      valueWithFeeApplied: 21
+      valueAfterFeeApplied: 21
     }
   ]
 };

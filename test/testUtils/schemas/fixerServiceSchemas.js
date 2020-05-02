@@ -3,7 +3,7 @@ exports.properGetExchangeRatesResponse = {
   timestamp: 1588323908,
   base: 'EUR',
   date: '2020-05-01',
-  rates: { ARS: 73.143909, USD: 1.097647 }
+  rates: { ARS: 73, USD: 2 }
 };
 
 exports.getExchangeRatesRespWithError = {

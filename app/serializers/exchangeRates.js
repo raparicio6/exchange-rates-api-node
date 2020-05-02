@@ -1,3 +1,23 @@
+exports.serializeExchangeRate = ({
+  baseCurrency,
+  targetCurrency,
+  originalValue,
+  feePercentage,
+  collectedAt,
+  feeAmount,
+  valueAfterFeeApplied
+}) => ({
+  exchangeRate: {
+    baseCurrency,
+    targetCurrency,
+    originalValue,
+    feePercentage,
+    collectedAt,
+    feeAmount,
+    valueAfterFeeApplied
+  }
+});
+
 exports.serializeExchangeRates = exchangeRates => ({
   exchangeRates: exchangeRates.map(
     ({
@@ -5,17 +25,17 @@ exports.serializeExchangeRates = exchangeRates => ({
       targetCurrency,
       originalValue,
       feePercentage,
-      createdAt,
+      collectedAt,
       feeAmount,
-      valueWithFeeApplied
+      valueAfterFeeApplied
     }) => ({
       baseCurrency,
       targetCurrency,
       originalValue,
       feePercentage,
-      createdAt,
+      collectedAt,
       feeAmount,
-      valueWithFeeApplied
+      valueAfterFeeApplied
     })
   )
 });

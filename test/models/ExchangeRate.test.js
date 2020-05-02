@@ -26,8 +26,8 @@ describe('ExchangeRate', () => {
     it('exchangeRate has feePercentage property', () => {
       expect(exchangeRate.feePercentage).toBe(10);
     });
-    it('exchangeRate has createdAt property', () => {
-      expect(exchangeRate.createdAt).toStrictEqual(new Date('2020-05-01'));
+    it('exchangeRate has collectedAt property', () => {
+      expect(exchangeRate.collectedAt).toStrictEqual(new Date('2020-05-01'));
     });
     it('exchangeRate has isLastRateOfPair property', () => {
       expect(exchangeRate.isLastRateOfPair).toBe(true);
@@ -35,8 +35,8 @@ describe('ExchangeRate', () => {
     it('exchangeRate has feeAmount property', () => {
       expect(exchangeRate.feeAmount).toBe(5);
     });
-    it('exchangeRate has valueWithFeeApplied property', () => {
-      expect(exchangeRate.valueWithFeeApplied).toBe(55);
+    it('exchangeRate has valueAfterFeeApplied property', () => {
+      expect(exchangeRate.valueAfterFeeApplied).toBe(55);
     });
     it('ExchangeRate collection has one document', async () => {
       const count = await ExchangeRate.countDocuments();

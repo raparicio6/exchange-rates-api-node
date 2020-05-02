@@ -1,6 +1,6 @@
 const { healthCheck } = require('./controllers/healthCheck');
-const { getExchangeRates } = require('./controllers/exchangeRates');
-const { GET } = require('./constants');
+const { getExchangeRates, createExchangeRate } = require('./controllers/exchangeRates');
+const { GET, POST } = require('./constants');
 
 module.exports = [
   {
@@ -12,5 +12,10 @@ module.exports = [
     method: [GET],
     path: '/exchange_rates',
     handler: getExchangeRates
+  },
+  {
+    method: [POST],
+    path: '/exchange_rates',
+    handler: createExchangeRate
   }
 ];
