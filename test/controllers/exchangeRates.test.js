@@ -272,21 +272,3 @@ describe('POST /exchange_rates', () => {
     });
   });
 });
-
-describe('GET /currencies', () => {
-  describe('Successful response', () => {
-    let response = null;
-    beforeAll(async done => {
-      mockGetCurrencies();
-      response = await request(app.listener).get('/currencies');
-      return done();
-    });
-
-    it('status is 200', () => {
-      expect(response.status).toBe(200);
-    });
-    it('response body has currencies property', () => {
-      expect(response.body).toHaveProperty('currencies', expect.any(Object));
-    });
-  });
-});

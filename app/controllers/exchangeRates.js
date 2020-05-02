@@ -1,10 +1,6 @@
 const Boom = require('@hapi/boom');
 const ExchangeRate = require('../models/ExchangeRate');
-const {
-  serializeExchangeRates,
-  serializeExchangeRate,
-  serializeCurrencies
-} = require('../serializers/exchangeRates');
+const { serializeExchangeRates, serializeExchangeRate } = require('../serializers/exchangeRates');
 const { getExchangeRates, getCurrencies } = require('../services/fixer');
 const { fixerResponseToExchangeRates, fixerResponseToConcurrencies } = require('../mappers/exchangeRates');
 const { EURO } = require('../constants');
@@ -59,5 +55,3 @@ exports.createExchangeRate = (req, h) => {
       .then(createdExchangeRate => h.response(serializeExchangeRate(createdExchangeRate)).code(201));
   });
 };
-
-exports.getCurrencies = () => getCurrencies().then(serializeCurrencies);

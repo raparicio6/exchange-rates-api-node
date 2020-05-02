@@ -1,5 +1,6 @@
 const { healthCheck } = require('./controllers/healthCheck');
-const { getExchangeRates, createExchangeRate, getCurrencies } = require('./controllers/exchangeRates');
+const { getExchangeRates, createExchangeRate } = require('./controllers/exchangeRates');
+const { getCurrencies } = require('./controllers/currencies');
 const { GET, POST } = require('./constants');
 
 module.exports = [
