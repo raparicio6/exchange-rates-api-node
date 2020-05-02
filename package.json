@@ -55,12 +55,15 @@
     }
   },
   "dependencies": {
+    "@hapi/boom": "^9.1.0",
     "@hapi/hapi": "^19.1.1",
     "axios": "^0.19.2",
     "express-wolox-logger": "^2.0.0",
+    "install": "^0.13.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.11",
-    "nock": "^12.0.3"
+    "nock": "^12.0.3",
+    "npm": "^6.14.4"
   },
   "devDependencies": {
     "babel": "6.23.0",

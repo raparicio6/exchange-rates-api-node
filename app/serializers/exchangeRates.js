@@ -39,3 +39,5 @@ exports.serializeExchangeRates = exchangeRates => ({
     })
   )
 });
+
+exports.serializeCurrencies = ({ symbols }) => ({ currencies: symbols });
