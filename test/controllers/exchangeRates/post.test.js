@@ -1,111 +1,13 @@
 const request = require('supertest');
-const app = require('../../app');
-const ExchangeRate = require('../../app/models/ExchangeRate');
-const connectToDatabase = require('../../config/db');
-const { manyExchangeRates, getExchangeRatesResponse } = require('../testUtils/schemas/exchangeRateSchemas');
-const { mockGetExchangeRates, mockGetCurrencies } = require('../testUtils/mocks');
-
-describe('GET /exchange_rates', () => {
-  describe('Successful response', () => {
-    let connection = null;
-    beforeAll(async done => {
-      connection = await connectToDatabase();
-      await ExchangeRate.create(manyExchangeRates);
-      return done();
-    });
-    afterAll(done => connection.connection.db.dropDatabase().then(() => done()));
-
-    describe('No query params', () => {
-      let response = null;
-      beforeAll(async done => {
-        response = await request(app.listener).get('/exchange_rates');
-        return done();
-      });
-
-      it('status is 200', () => {
-        expect(response.status).toBe(200);
-      });
-      it('response body matchs with expected object', () => {
-        expect(response.body).toMatchObject(getExchangeRatesResponse);
-      });
-    });
-
-    describe('baseCurrencies query param', () => {
-      let response = null;
-      beforeAll(async done => {
-        response = await request(app.listener)
-          .get('/exchange_rates')
-          .query({ baseCurrencies: ['EUR'] });
-        return done();
-      });
-
-      it('status is 200', () => {
-        expect(response.status).toBe(200);
-      });
-      it('response body matchs with expected object', () => {
-        expect(response.body).toMatchObject({
-          exchangeRates: [
-            {
-              baseCurrency: 'EUR',
-              targetCurrency: 'USD',
-              originalValue: 50,
-              feePercentage: 10,
-              collectedAt: '2020-05-01T00:00:00.000Z',
-              feeAmount: 5,
-              valueAfterFeeApplied: 55
-            }
-          ]
-        });
-      });
-    });
-
-    describe('targetCurrencies query param', () => {
-      let response = null;
-      beforeAll(async done => {
-        response = await request(app.listener)
-          .get('/exchange_rates')
-          .query({ targetCurrencies: ['USD'] });
-        return done();
-      });
-
-      it('status is 200', () => {
-        expect(response.status).toBe(200);
-      });
-      it('response body matchs with expected object', () => {
-        expect(response.body).toMatchObject(getExchangeRatesResponse);
-      });
-    });
-
-    describe('collectedAt query param', () => {
-      let response = null;
-      beforeAll(async done => {
-        response = await request(app.listener)
-          .get('/exchange_rates')
-          .query({ collectedAt: '2020-05-02' });
-        return done();
-      });
-
-      it('status is 200', () => {
-        expect(response.status).toBe(200);
-      });
-      it('response body matchs with expected object', () => {
-        expect(response.body).toMatchObject({
-          exchangeRates: [
-            {
-              baseCurrency: 'ARS',
-              targetCurrency: 'USD',
-              originalValue: 20,
-              feePercentage: 5,
-              collectedAt: '2020-05-02T00:00:00.000Z',
-              feeAmount: 1,
-              valueAfterFeeApplied: 21
-            }
-          ]
-        });
-      });
-    });
-  });
-});
+const app = require('../../../app');
+const ExchangeRate = require('../../../app/models/ExchangeRate');
+const connectToDatabase = require('../../../config/db');
+const {
+  mockGetExchangeRates,
+  mockGetCurrencies,
+  mockGetCurrenciesWithError,
+  mockGetExchangeRatesWithError
+} = require('../../testUtils/mocks');
 
 describe('POST /exchange_rates', () => {
   describe('Successful response', () => {
@@ -269,6 +171,61 @@ describe('POST /exchange_rates', () => {
     });
     it('message is a string', () => {
       expect(response.body.message).toStrictEqual(expect.any(String));
+    });
+  });
+
+  describe('Fixer respond with error in get currencies', () => {
+    let response = null;
+    beforeAll(async done => {
+      mockGetCurrenciesWithError();
+      response = await request(app.listener)
+        .post('/exchange_rates')
+        .send({
+          exchangeRate: {
+            baseCurrency: 'USD',
+            targetCurrency: 'ARS',
+            feePercentage: 10
+          }
+        });
+      return done();
+    });
+
+    it('status is 500', () => {
+      expect(response.status).toBe(500);
+    });
+    it('error is Internal Server Error', () => {
+      expect(response.body.error).toBe('Internal Server Error');
+    });
+    it('message is An internal server error occurred', () => {
+      expect(response.body.message).toBe('An internal server error occurred');
+    });
+  });
+
+  describe('Fixer respond with error in get exchange rates', () => {
+    let response = null;
+    beforeAll(async done => {
+      mockGetCurrencies();
+      mockGetExchangeRatesWithError();
+      response = await request(app.listener)
+        .post('/exchange_rates')
+        .send({
+          exchangeRate: {
+            baseCurrency: 'USD',
+            targetCurrency: 'ARS',
+            feePercentage: 10
+          }
+        });
+      return done();
+    });
+
+    it('status is 500', () => {
+      expect(response.status).toBe(500);
+    });
+    it('error is Internal Server Error', () => {
+      expect(response.body.error).toBe('Internal Server Error');
+    });
+    it('message is An internal server error occurred', () => {
+      expect(response.body.message).toBe('An internal server error occurred');
     });
   });
 });

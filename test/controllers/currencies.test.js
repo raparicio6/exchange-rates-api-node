@@ -19,7 +19,7 @@ describe('GET /currencies', () => {
     });
   });
 
-  describe('Response with error', () => {
+  describe('Fixer respond with error', () => {
     let response = null;
     beforeAll(async done => {
       mockGetCurrenciesWithError();
