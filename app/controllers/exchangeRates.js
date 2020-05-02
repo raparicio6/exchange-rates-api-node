@@ -6,7 +6,7 @@ const { fixerResponseToExchangeRates, fixerResponseToConcurrencies } = require('
 const { EURO } = require('../constants');
 
 exports.getExchangeRates = req => {
-  const { baseCurrencies, targetCurrencies, collectedAt } = req.query;
+  const { baseCurrencies, targetCurrencies, collectedAt, limit, page } = req.query;
   const filter = {};
   if (baseCurrencies) {
     filter.baseCurrency = { $in: baseCurrencies };
@@ -20,7 +20,15 @@ exports.getExchangeRates = req => {
     filter.isLastRateOfPair = true;
   }
 
-  return ExchangeRate.find(filter).then(serializeExchangeRates);
+  const paginationOptions = {};
+  if (limit) {
+    paginationOptions.limit = limit;
+  }
+  if (page) {
+    paginationOptions.page = page;
+  }
+
+  return ExchangeRate.paginate(filter, paginationOptions).then(serializeExchangeRates);
 };
 
 exports.createExchangeRate = (req, h) => {

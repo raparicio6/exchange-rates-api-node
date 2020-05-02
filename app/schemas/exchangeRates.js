@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi');
+const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
 exports.createExchangeRateSchema = {
   payload: Joi.object({
@@ -8,4 +8,15 @@ exports.createExchangeRateSchema = {
       feePercentage: Joi.number().required()
     }).required()
   }).required()
+};
+
+exports.getExchangeRatesSchema = {
+  query: Joi.object({
+    collectedAt: Joi.date()
+      .format('YYYY-MM-DD')
+      .utc()
+  }),
+  options: {
+    allowUnknown: true
+  }
 };

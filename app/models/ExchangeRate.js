@@ -1,5 +1,6 @@
 /* eslint-disable func-names */
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const exchangeRateSchema = new mongoose.Schema(
   {
@@ -20,4 +21,5 @@ exchangeRateSchema.virtual('valueAfterFeeApplied').get(function() {
   return this.originalValue + this.feeAmount;
 });
 
+exchangeRateSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('ExchangeRate', exchangeRateSchema);

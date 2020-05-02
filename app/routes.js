@@ -2,7 +2,7 @@ const { healthCheck } = require('./controllers/healthCheck');
 const { getExchangeRates, createExchangeRate } = require('./controllers/exchangeRates');
 const { getCurrencies } = require('./controllers/currencies');
 const { GET, POST } = require('./constants');
-const { createExchangeRateSchema } = require('./schemas/exchangeRates');
+const { createExchangeRateSchema, getExchangeRatesSchema } = require('./schemas/exchangeRates');
 
 module.exports = [
   {
@@ -13,7 +13,10 @@ module.exports = [
   {
     method: [GET],
     path: '/exchange_rates',
-    handler: getExchangeRates
+    handler: getExchangeRates,
+    options: {
+      validate: getExchangeRatesSchema
+    }
   },
   {
     method: [POST],

@@ -18,8 +18,8 @@ exports.serializeExchangeRate = ({
   }
 });
 
-exports.serializeExchangeRates = exchangeRates => ({
-  exchangeRates: exchangeRates.map(
+exports.serializeExchangeRates = ({ docs, totalDocs, limit, page, totalPages, prevPage, nextPage }) => ({
+  exchangeRates: docs.map(
     ({
       baseCurrency,
       targetCurrency,
@@ -37,7 +37,13 @@ exports.serializeExchangeRates = exchangeRates => ({
       feeAmount,
       valueAfterFeeApplied
     })
-  )
+  ),
+  limit,
+  page,
+  prevPage,
+  nextPage,
+  totalPages,
+  totalExchangeRates: totalDocs
 });
 
 exports.serializeCurrencies = ({ symbols }) => ({ currencies: symbols });

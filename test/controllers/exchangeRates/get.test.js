@@ -56,7 +56,13 @@ describe('GET /exchange_rates', () => {
               feeAmount: 5,
               valueAfterFeeApplied: 55
             }
-          ]
+          ],
+          limit: 10,
+          page: 1,
+          prevPage: null,
+          nextPage: null,
+          totalPages: 1,
+          totalExchangeRates: 1
         });
       });
     });
@@ -102,9 +108,70 @@ describe('GET /exchange_rates', () => {
               feeAmount: 1,
               valueAfterFeeApplied: 21
             }
-          ]
+          ],
+          limit: 10,
+          page: 1,
+          prevPage: null,
+          nextPage: null,
+          totalPages: 1,
+          totalExchangeRates: 1
         });
       });
+    });
+
+    describe('page and limit query params', () => {
+      let response = null;
+      beforeAll(async done => {
+        response = await request(app.listener)
+          .get('/exchange_rates')
+          .query({ limit: 1, page: 2 });
+        return done();
+      });
+
+      it('status is 200', () => {
+        expect(response.status).toBe(200);
+      });
+      it('response body matchs with expected object', () => {
+        expect(response.body).toMatchObject({
+          exchangeRates: [
+            {
+              baseCurrency: 'ARS',
+              targetCurrency: 'USD',
+              originalValue: 20,
+              feePercentage: 5,
+              collectedAt: '2020-05-02T00:00:00.000Z',
+              feeAmount: 1,
+              valueAfterFeeApplied: 21
+            }
+          ],
+          limit: 1,
+          page: 2,
+          prevPage: 1,
+          nextPage: null,
+          totalPages: 2,
+          totalExchangeRates: 2
+        });
+      });
+    });
+  });
+
+  describe('Invalid collectedAt respond with error', () => {
+    let response = null;
+    beforeAll(async done => {
+      response = await request(app.listener)
+        .get('/exchange_rates')
+        .query({ collectedAt: 'invalid' });
+      return done();
+    });
+
+    it('status is 400', () => {
+      expect(response.status).toBe(400);
+    });
+    it('error is Bad Request', () => {
+      expect(response.body.error).toBe('Bad Request');
+    });
+    it('message is Invalid request query input', () => {
+      expect(response.body.message).toBe('Invalid request query input');
     });
   });
 });

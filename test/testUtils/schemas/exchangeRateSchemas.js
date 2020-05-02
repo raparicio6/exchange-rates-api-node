@@ -47,5 +47,11 @@ exports.getExchangeRatesResponse = {
       feeAmount: 1,
       valueAfterFeeApplied: 21
     }
-  ]
+  ],
+  limit: 10,
+  page: 1,
+  prevPage: null,
+  nextPage: null,
+  totalPages: 1,
+  totalExchangeRates: 2
 };
