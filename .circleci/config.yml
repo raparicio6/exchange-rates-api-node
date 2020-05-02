@@ -29,4 +29,4 @@ jobs:
           command: npm test
       - run:
           name: code-coverage
-          command: npm audit --audit-level=moderate
+          command: 'npm audit --audit-level=moderate'
