@@ -1,7 +1,9 @@
 const nock = require('nock');
 const {
   properGetExchangeRatesResponse,
-  getExchangeRatesRespWithError
+  getExchangeRatesRespWithError,
+  getCurrenciesResponseWithError,
+  properGetCurrenciesResponse
 } = require('./schemas/fixerServiceSchemas');
 const {
   fixer: { apiBaseUrl }
@@ -16,3 +18,13 @@ exports.mockGetExchangeRatesWithError = () =>
   nock(apiBaseUrl)
     .get(/.latest*/)
     .reply(200, getExchangeRatesRespWithError);
+
+exports.mockGetCurrencies = () =>
+  nock(apiBaseUrl)
+    .get(/.symbols*/)
+    .reply(200, properGetCurrenciesResponse);
+
+exports.mockGetCurrenciesWithError = () =>
+  nock(apiBaseUrl)
+    .get(/.symbols*/)
+    .reply(200, getCurrenciesResponseWithError);
