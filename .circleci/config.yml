@@ -23,10 +23,10 @@ jobs:
           command: npm run lint
       - run:
           name: audit
-          command: npm audit
+          command: npm audit --audit-level=moderate
       - run:
           name: test
           command: npm test
       - run:
           name: code-coverage
-          command: 'npm audit --audit-level=moderate'
+          command: npm run cover
