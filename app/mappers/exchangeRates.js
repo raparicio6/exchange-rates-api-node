@@ -3,3 +3,5 @@ exports.fixerResponseToExchangeRates = ({ base, date, rates }) => ({
   date,
   rates
 });
+
+exports.fixerResponseToConcurrencies = ({ symbols }) => symbols;

@@ -128,6 +128,7 @@ describe('POST /exchange_rates', () => {
           isLastRateOfPair: true
         });
         mockGetExchangeRates();
+        mockGetCurrencies();
         response = await request(app.listener)
           .post('/exchange_rates')
           .send({
@@ -185,6 +186,7 @@ describe('POST /exchange_rates', () => {
       let response = null;
       beforeAll(async done => {
         mockGetExchangeRates();
+        mockGetCurrencies();
         response = await request(app.listener)
           .post('/exchange_rates')
           .send({
@@ -213,6 +215,60 @@ describe('POST /exchange_rates', () => {
           }
         });
       });
+    });
+  });
+
+  describe('Base concurrency does not exist respond with error', () => {
+    let response = null;
+    beforeAll(async done => {
+      mockGetCurrencies();
+      response = await request(app.listener)
+        .post('/exchange_rates')
+        .send({
+          exchangeRate: {
+            baseCurrency: 'foo',
+            targetCurrency: 'ARS',
+            feePercentage: 10
+          }
+        });
+      return done();
+    });
+
+    it('status is 400', () => {
+      expect(response.status).toBe(400);
+    });
+    it('error is Bad Request', () => {
+      expect(response.body.error).toBe('Bad Request');
+    });
+    it('message is a string', () => {
+      expect(response.body.message).toStrictEqual(expect.any(String));
+    });
+  });
+
+  describe('Target concurrency does not exist respond with error', () => {
+    let response = null;
+    beforeAll(async done => {
+      mockGetCurrencies();
+      response = await request(app.listener)
+        .post('/exchange_rates')
+        .send({
+          exchangeRate: {
+            baseCurrency: 'USD',
+            targetCurrency: 'foo',
+            feePercentage: 10
+          }
+        });
+      return done();
+    });
+
+    it('status is 400', () => {
+      expect(response.status).toBe(400);
+    });
+    it('error is Bad Request', () => {
+      expect(response.body.error).toBe('Bad Request');
+    });
+    it('message is a string', () => {
+      expect(response.body.message).toStrictEqual(expect.any(String));
     });
   });
 });
