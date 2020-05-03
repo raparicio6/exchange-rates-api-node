@@ -7,7 +7,7 @@ const { GET, EURO } = require('../constants');
 const req = options =>
   request(options).then(response => {
     if (!response.data.success) {
-      return Promise.reject(response.data.error.type);
+      return Promise.reject({ message: response.data.error.type });
     }
 
     return response.data;

@@ -61,5 +61,5 @@ exports.createExchangeRate = (req, h) => {
         );
       });
     })
-    .catch(error => new Boom.internal(error));
+    .catch(error => new Boom.internal(error.message));
 };

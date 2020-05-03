@@ -3,7 +3,8 @@ const {
   properGetExchangeRatesResponse,
   getExchangeRatesRespWithError,
   getCurrenciesResponseWithError,
-  properGetCurrenciesResponse
+  properGetCurrenciesResponse,
+  serviceUnavailableResponse
 } = require('./schemas/fixerServiceSchemas');
 const {
   fixer: { apiBaseUrl }
@@ -28,3 +29,12 @@ exports.mockGetCurrenciesWithError = () =>
   nock(apiBaseUrl)
     .get(/.symbols*/)
     .reply(200, getCurrenciesResponseWithError);
+
+exports.mockFixerServiceUnavailable = () => {
+  nock(apiBaseUrl)
+    .post(/.*/)
+    .reply(503, serviceUnavailableResponse);
+  nock(apiBaseUrl)
+    .get(/.*/)
+    .reply(503, serviceUnavailableResponse);
+};

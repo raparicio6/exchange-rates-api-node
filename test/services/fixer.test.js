@@ -49,7 +49,7 @@ describe('Fixer Service GET /latest endpoint', () => {
     });
 
     it('response is invalid_currency_codes', () => {
-      expect(fixerApiResponse).toBe('invalid_currency_codes');
+      expect(fixerApiResponse).toStrictEqual({ message: 'invalid_currency_codes' });
     });
   });
 });
@@ -84,7 +84,7 @@ describe('Fixer Service GET /symbols endpoint', () => {
     });
 
     it('response is invalid_access_key', () => {
-      expect(fixerApiResponse).toBe('invalid_access_key');
+      expect(fixerApiResponse).toStrictEqual({ message: 'invalid_access_key' });
     });
   });
 });

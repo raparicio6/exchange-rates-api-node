@@ -1,6 +1,7 @@
 module.exports = {
   extends: ['wolox-node'],
   rules: {
-    'new-cap': 'off'
+    'new-cap': 'off',
+    'prefer-promise-reject-errors': 'off'
   }
 };

@@ -5,4 +5,4 @@ const { serializeCurrencies } = require('../serializers/exchangeRates');
 exports.getCurrencies = () =>
   getCurrencies()
     .then(serializeCurrencies)
-    .catch(error => new Boom.internal(error));
+    .catch(error => new Boom.internal(error.message));

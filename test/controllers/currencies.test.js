@@ -1,6 +1,10 @@
 const request = require('supertest');
 const { app } = require('../../app');
-const { mockGetCurrencies, mockGetCurrenciesWithError } = require('../testUtils/mocks');
+const {
+  mockGetCurrencies,
+  mockGetCurrenciesWithError,
+  mockFixerServiceUnavailable
+} = require('../testUtils/mocks');
 
 describe('GET /currencies', () => {
   describe('Successful response', () => {
@@ -19,22 +23,43 @@ describe('GET /currencies', () => {
     });
   });
 
-  describe('Fixer respond with error', () => {
-    let response = null;
-    beforeAll(async done => {
-      mockGetCurrenciesWithError();
-      response = await request(app.listener).get('/currencies');
-      return done();
+  describe('Response with error', () => {
+    describe('Fixer respond with error respond with error', () => {
+      let response = null;
+      beforeAll(async done => {
+        mockGetCurrenciesWithError();
+        response = await request(app.listener).get('/currencies');
+        return done();
+      });
+
+      it('status is 500', () => {
+        expect(response.status).toBe(500);
+      });
+      it('error is Internal Server Error', () => {
+        expect(response.body.error).toBe('Internal Server Error');
+      });
+      it('message is An internal server error occurred', () => {
+        expect(response.body.message).toBe('An internal server error occurred');
+      });
     });
 
-    it('status is 500', () => {
-      expect(response.status).toBe(500);
-    });
-    it('error is Internal Server Error', () => {
-      expect(response.body.error).toBe('Internal Server Error');
-    });
-    it('message is An internal server error occurred', () => {
-      expect(response.body.message).toBe('An internal server error occurred');
+    describe('Fixer unavailable respond with error', () => {
+      let response = null;
+      beforeAll(async done => {
+        mockFixerServiceUnavailable();
+        response = await request(app.listener).get('/currencies');
+        return done();
+      });
+
+      it('status is 500', () => {
+        expect(response.status).toBe(500);
+      });
+      it('error is Internal Server Error', () => {
+        expect(response.body.error).toBe('Internal Server Error');
+      });
+      it('message is An internal server error occurred', () => {
+        expect(response.body.message).toBe('An internal server error occurred');
+      });
     });
   });
 });

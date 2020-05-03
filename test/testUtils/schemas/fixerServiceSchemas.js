@@ -37,3 +37,8 @@ exports.getCurrenciesResponseWithError = {
     info: 'You have not supplied a valid API Access Key. [Technical Support: support@apilayer.com]'
   }
 };
+
+exports.serviceUnavailableResponse = {
+  statusCode: 503,
+  message: 'Service unavailable'
+};
