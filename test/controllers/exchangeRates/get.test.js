@@ -27,7 +27,7 @@ describe('GET /exchange_rates', () => {
       it('status is 200', () => {
         expect(response.status).toBe(200);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject(getExchangeRatesResponse);
       });
     });
@@ -44,7 +44,7 @@ describe('GET /exchange_rates', () => {
       it('status is 200', () => {
         expect(response.status).toBe(200);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject({
           exchangeRates: [
             {
@@ -79,7 +79,7 @@ describe('GET /exchange_rates', () => {
       it('status is 200', () => {
         expect(response.status).toBe(200);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject(getExchangeRatesResponse);
       });
     });
@@ -96,7 +96,7 @@ describe('GET /exchange_rates', () => {
       it('status is 200', () => {
         expect(response.status).toBe(200);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject({
           exchangeRates: [
             {
@@ -131,7 +131,7 @@ describe('GET /exchange_rates', () => {
       it('status is 200', () => {
         expect(response.status).toBe(200);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject({
           exchangeRates: [
             {

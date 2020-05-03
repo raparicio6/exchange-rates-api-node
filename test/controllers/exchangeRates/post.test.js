@@ -46,7 +46,7 @@ describe('POST /exchange_rates', () => {
       it('status is 201', () => {
         expect(response.status).toBe(201);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject({
           exchangeRate: {
             baseCurrency: 'EUR',
@@ -89,6 +89,14 @@ describe('POST /exchange_rates', () => {
       beforeAll(async done => {
         mockGetExchangeRates();
         mockGetCurrencies();
+        await ExchangeRate.create({
+          baseCurrency: 'USD',
+          targetCurrency: 'ARS',
+          originalValue: 50,
+          feePercentage: 15,
+          collectedAt: '2020-05-01',
+          isLastRateOfPair: true
+        });
         response = await request(app.listener)
           .post('/exchange_rates')
           .send({
@@ -104,7 +112,7 @@ describe('POST /exchange_rates', () => {
       it('status is 201', () => {
         expect(response.status).toBe(201);
       });
-      it('response body matchs with expected object', () => {
+      it('response body matches with expected object', () => {
         expect(response.body).toMatchObject({
           exchangeRate: {
             baseCurrency: 'USD',
@@ -116,6 +124,29 @@ describe('POST /exchange_rates', () => {
             valueAfterFeeApplied: 40.15
           }
         });
+      });
+      it('exchangeRate is persisted', async () => {
+        const createdExchangeRate = await ExchangeRate.findOne({
+          baseCurrency: 'USD',
+          targetCurrency: 'ARS',
+          isLastRateOfPair: true
+        });
+        expect(createdExchangeRate).toHaveProperty('baseCurrency', 'USD');
+        expect(createdExchangeRate).toHaveProperty('targetCurrency', 'ARS');
+        expect(createdExchangeRate).toHaveProperty('originalValue', 36.5);
+        expect(createdExchangeRate).toHaveProperty('feePercentage', 10);
+        expect(createdExchangeRate).toHaveProperty('collectedAt', new Date('2020-05-01'));
+        expect(createdExchangeRate).toHaveProperty('feeAmount', 3.65);
+        expect(createdExchangeRate).toHaveProperty('valueAfterFeeApplied', 40.15);
+        expect(createdExchangeRate).toHaveProperty('isLastRateOfPair', true);
+      });
+      it('isLastRateOfPair property of older exchangeRate is updated to false', async () => {
+        const olderExchangeRate = await ExchangeRate.findOne({
+          baseCurrency: 'USD',
+          targetCurrency: 'ARS',
+          isLastRateOfPair: false
+        });
+        expect(olderExchangeRate).not.toBeUndefined();
       });
     });
   });
