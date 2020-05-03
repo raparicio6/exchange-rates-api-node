@@ -144,29 +144,5 @@ describe('POST /exchange_rates', () => {
         expect(response.body.message).toBe('An internal server error occurred');
       });
     });
-
-    describe('Malformed body respond with error', () => {
-      let response = null;
-      beforeAll(async done => {
-        response = await request(app.listener)
-          .post('/exchange_rates')
-          .send({
-            exchangeRate: {
-              veryBad: ':/'
-            }
-          });
-        return done();
-      });
-
-      it('status is 400', () => {
-        expect(response.status).toBe(400);
-      });
-      it('error is Bad Request', () => {
-        expect(response.body.error).toBe('Bad Request');
-      });
-      it('message is Invalid request payload input', () => {
-        expect(response.body.message).toBe('Invalid request payload input');
-      });
-    });
   });
 });
