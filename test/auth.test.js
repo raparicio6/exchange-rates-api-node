@@ -26,6 +26,7 @@ describe('auth', () => {
     });
 
     it('status is 200', () => {
+      console.log('aaaaaaaaaaaaaaa', response);
       expect(response.status).toBe(200);
     });
   });
