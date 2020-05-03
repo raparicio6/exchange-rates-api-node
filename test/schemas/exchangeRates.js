@@ -7,7 +7,7 @@ describe('getExchangeRatesSchema', () => {
     beforeAll(async done => {
       response = await request(app.listener)
         .get('/exchange_rates')
-        .query({ collectedAt: 'invalid' });
+        .query({ collectedAt: '31-03-2018' });
       return done();
     });
 
