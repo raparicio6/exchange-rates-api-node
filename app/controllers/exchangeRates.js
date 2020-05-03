@@ -5,6 +5,7 @@ const { getExchangeRates, getCurrencies } = require('../services/fixer');
 const { mapFixerRespToExchangeRates } = require('../mappers/exchangeRates');
 const { mapFixerRespToConcurrencies } = require('../mappers/currencies');
 const { EURO } = require('../constants');
+const logger = require('../logger');
 
 exports.getExchangeRates = req => {
   const { baseCurrencies, targetCurrencies, collectedAt, limit, page } = req.query;
@@ -34,6 +35,7 @@ exports.getExchangeRates = req => {
 
 exports.createExchangeRate = (req, h) => {
   const { baseCurrency, targetCurrency, feePercentage } = req.payload.exchangeRate;
+  logger.info(`Starting to create exchange rate with body ${JSON.stringify(req.payload)}`);
   return getCurrencies()
     .then(concurrenciesResponse => {
       const currencies = mapFixerRespToConcurrencies(concurrenciesResponse);
@@ -58,9 +60,17 @@ exports.createExchangeRate = (req, h) => {
             originalValue,
             collectedAt: date,
             isLastRateOfPair: true
-          }).then(createdExchangeRate => h.response(serializeExchangeRate(createdExchangeRate)).code(201))
+          }).then(createdExchangeRate => {
+            logger.info(
+              `Successfully created exchange rate with values ${JSON.stringify(createdExchangeRate)}`
+            );
+            return h.response(serializeExchangeRate(createdExchangeRate)).code(201);
+          })
         );
       });
     })
-    .catch(error => new Boom.internal(error.message));
+    .catch(error => {
+      logger.error(`Could not create exchange rate. Error: ${error.message}`);
+      return new Boom.internal(error.message);
+    });
 };
