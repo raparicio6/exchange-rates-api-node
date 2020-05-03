@@ -2,6 +2,7 @@ const request = require('supertest');
 const { app } = require('../app');
 const apiKeyAuth = require('../app/plugins/apiKeyAuth');
 const { auth } = require('../config').common;
+const { mockGetCurrencies } = require('./testUtils/mocks');
 
 describe('auth', () => {
   beforeAll(async done => {
@@ -19,6 +20,7 @@ describe('auth', () => {
   describe('api-key is ok respond with success', () => {
     let response = null;
     beforeAll(async done => {
+      mockGetCurrencies();
       response = await request(app.listener)
         .get('/currencies')
         .set(auth.headerName, auth.secret);
@@ -26,7 +28,6 @@ describe('auth', () => {
     });
 
     it('status is 200', () => {
-      console.log('aaaaaaaaaaaaaaa', response);
       expect(response.status).toBe(200);
     });
   });
@@ -34,6 +35,7 @@ describe('auth', () => {
   describe('api-key is wrong respond with error', () => {
     let response = null;
     beforeAll(async done => {
+      mockGetCurrencies();
       response = await request(app.listener)
         .get('/currencies')
         .set(auth.headerName, 'badkey');
