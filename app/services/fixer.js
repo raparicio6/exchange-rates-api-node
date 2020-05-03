@@ -4,13 +4,22 @@ const {
 } = require('../../config').common;
 const { GET, EURO } = require('../constants');
 
+const req = options =>
+  request(options).then(response => {
+    if (!response.data.success) {
+      return Promise.reject(response.data.error.type);
+    }
+
+    return response.data;
+  });
+
 exports.getExchangeRates = (symbols, base = EURO) => {
   const options = {
     method: GET,
     url: `${apiBaseUrl}/latest`,
     params: { access_key: apiKey, base, symbols: symbols.join() }
   };
-  return request(options).then(response => response.data);
+  return req(options);
 };
 
 exports.getCurrencies = () => {
@@ -19,5 +28,5 @@ exports.getCurrencies = () => {
     url: `${apiBaseUrl}/symbols`,
     params: { access_key: apiKey }
   };
-  return request(options).then(response => response.data);
+  return req(options);
 };

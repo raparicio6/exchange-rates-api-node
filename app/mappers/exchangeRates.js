@@ -1,7 +1,7 @@
-exports.fixerResponseToExchangeRates = ({ base, date, rates }) => ({
+exports.mapFixerRespToExchangeRates = ({ base, date, rates }) => ({
   base,
   date,
   rates
 });
 
-exports.fixerResponseToConcurrencies = ({ symbols }) => symbols;
+exports.mapFixerRespToConcurrencies = ({ symbols }) => symbols;

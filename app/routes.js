@@ -8,14 +8,18 @@ module.exports = [
   {
     method: [GET],
     path: '/health',
-    handler: healthCheck
+    handler: healthCheck,
+    options: {
+      tags: ['api']
+    }
   },
   {
     method: [GET],
     path: '/exchange_rates',
     handler: getExchangeRates,
     options: {
-      validate: getExchangeRatesSchema
+      validate: getExchangeRatesSchema,
+      tags: ['api']
     }
   },
   {
@@ -23,12 +27,16 @@ module.exports = [
     path: '/exchange_rates',
     handler: createExchangeRate,
     options: {
-      validate: createExchangeRateSchema
+      validate: createExchangeRateSchema,
+      tags: ['api']
     }
   },
   {
     method: [GET],
     path: '/currencies',
-    handler: getCurrencies
+    handler: getCurrencies,
+    options: {
+      tags: ['api']
+    }
   }
 ];

@@ -40,18 +40,16 @@ describe('Fixer Service GET /latest endpoint', () => {
     let fixerApiResponse = null;
     beforeAll(async done => {
       mockGetExchangeRatesWithError();
-      fixerApiResponse = await getExchangeRates(['foo']);
+      try {
+        await getExchangeRates(['foo']);
+      } catch (error) {
+        fixerApiResponse = error;
+      }
       return done();
     });
 
-    it('success is false', () => {
-      expect(fixerApiResponse).toHaveProperty('success', false);
-    });
-    it('response has error property', () => {
-      expect(fixerApiResponse).toHaveProperty('error', expect.any(Object));
-    });
-    it('error has info property', () => {
-      expect(fixerApiResponse.error).toHaveProperty('info', expect.any(String));
+    it('response is invalid_currency_codes', () => {
+      expect(fixerApiResponse).toBe('invalid_currency_codes');
     });
   });
 });
@@ -77,18 +75,16 @@ describe('Fixer Service GET /symbols endpoint', () => {
     let fixerApiResponse = null;
     beforeAll(async done => {
       mockGetCurrenciesWithError();
-      fixerApiResponse = await getCurrencies();
+      try {
+        await getCurrencies();
+      } catch (error) {
+        fixerApiResponse = error;
+      }
       return done();
     });
 
-    it('success is false', () => {
-      expect(fixerApiResponse).toHaveProperty('success', false);
-    });
-    it('response has error property', () => {
-      expect(fixerApiResponse).toHaveProperty('error', expect.any(Object));
-    });
-    it('error has info property', () => {
-      expect(fixerApiResponse.error).toHaveProperty('info', expect.any(String));
+    it('response is invalid_access_key', () => {
+      expect(fixerApiResponse).toBe('invalid_access_key');
     });
   });
 });

@@ -2,7 +2,7 @@ const Boom = require('@hapi/boom');
 const ExchangeRate = require('../models/ExchangeRate');
 const { serializeExchangeRates, serializeExchangeRate } = require('../serializers/exchangeRates');
 const { getExchangeRates, getCurrencies } = require('../services/fixer');
-const { fixerResponseToExchangeRates, fixerResponseToConcurrencies } = require('../mappers/exchangeRates');
+const { mapFixerRespToConcurrencies, mapFixerRespToExchangeRates } = require('../mappers/exchangeRates');
 const { EURO } = require('../constants');
 
 exports.getExchangeRates = req => {
@@ -33,37 +33,33 @@ exports.getExchangeRates = req => {
 
 exports.createExchangeRate = (req, h) => {
   const { baseCurrency, targetCurrency, feePercentage } = req.payload.exchangeRate;
-  return getCurrencies().then(concurrenciesResponse => {
-    if (!concurrenciesResponse.success) {
-      return new Boom.internal(concurrenciesResponse.error.type);
-    }
-    const currencies = fixerResponseToConcurrencies(concurrenciesResponse);
-    if (!(baseCurrency in currencies) || !(targetCurrency in currencies)) {
-      return new Boom.badRequest(
-        `Invalid concurrency. Valid concurrencies are ${JSON.stringify(currencies)}`
-      );
-    }
-    return getExchangeRates([baseCurrency, targetCurrency]).then(exchangeRatesResponse => {
-      if (!exchangeRatesResponse.success) {
-        return new Boom.internal(exchangeRatesResponse.error.type);
+  return getCurrencies()
+    .then(concurrenciesResponse => {
+      const currencies = mapFixerRespToConcurrencies(concurrenciesResponse);
+      if (!(baseCurrency in currencies) || !(targetCurrency in currencies)) {
+        return new Boom.badRequest(
+          `Invalid concurrency. Valid concurrencies are ${JSON.stringify(currencies)}`
+        );
       }
-      const { date, rates } = fixerResponseToExchangeRates(exchangeRatesResponse);
-      const originalValue =
-        baseCurrency === EURO ? rates[targetCurrency] : rates[targetCurrency] / rates[baseCurrency];
-      return ExchangeRate.findOneAndUpdate(
-        { baseCurrency, targetCurrency, isLastRateOfPair: true },
-        { isLastRateOfPair: false },
-        { useFindAndModify: false }
-      ).then(() =>
-        ExchangeRate.create({
-          baseCurrency,
-          targetCurrency,
-          feePercentage,
-          originalValue,
-          collectedAt: date,
-          isLastRateOfPair: true
-        }).then(createdExchangeRate => h.response(serializeExchangeRate(createdExchangeRate)).code(201))
-      );
-    });
-  });
+      return getExchangeRates([baseCurrency, targetCurrency]).then(exchangeRatesResponse => {
+        const { date, rates } = mapFixerRespToExchangeRates(exchangeRatesResponse);
+        const originalValue =
+          baseCurrency === EURO ? rates[targetCurrency] : rates[targetCurrency] / rates[baseCurrency];
+        return ExchangeRate.findOneAndUpdate(
+          { baseCurrency, targetCurrency, isLastRateOfPair: true },
+          { isLastRateOfPair: false },
+          { useFindAndModify: false }
+        ).then(() =>
+          ExchangeRate.create({
+            baseCurrency,
+            targetCurrency,
+            feePercentage,
+            originalValue,
+            collectedAt: date,
+            isLastRateOfPair: true
+          }).then(createdExchangeRate => h.response(serializeExchangeRate(createdExchangeRate)).code(201))
+        );
+      });
+    })
+    .catch(error => new Boom.internal(error));
 };

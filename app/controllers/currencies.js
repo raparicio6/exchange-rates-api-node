@@ -3,9 +3,6 @@ const { getCurrencies } = require('../services/fixer');
 const { serializeCurrencies } = require('../serializers/exchangeRates');
 
 exports.getCurrencies = () =>
-  getCurrencies().then(response => {
-    if (!response.success) {
-      return new Boom.internal(response.error.type);
-    }
-    return serializeCurrencies(response);
-  });
+  getCurrencies()
+    .then(serializeCurrencies)
+    .catch(error => new Boom.internal(error));

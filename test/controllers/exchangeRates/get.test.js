@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../../app');
+const { app } = require('../../../app');
 const ExchangeRate = require('../../../app/models/ExchangeRate');
 const connectToDatabase = require('../../../config/db');
 const {

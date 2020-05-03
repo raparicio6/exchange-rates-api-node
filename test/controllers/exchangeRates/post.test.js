@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../../app');
+const { app } = require('../../../app');
 const ExchangeRate = require('../../../app/models/ExchangeRate');
 const connectToDatabase = require('../../../config/db');
 const {
@@ -74,7 +74,7 @@ describe('POST /exchange_rates', () => {
         expect(createdExchangeRate).toHaveProperty('valueAfterFeeApplied', 80.3);
         expect(createdExchangeRate).toHaveProperty('isLastRateOfPair', true);
       });
-      it('older exchangeRate update isLastRateOfPair to false', async () => {
+      it('isLastRateOfPair property of older exchangeRate is updated to false', async () => {
         const olderExchangeRate = await ExchangeRate.findOne({
           baseCurrency: 'EUR',
           targetCurrency: 'ARS',
