@@ -18,10 +18,7 @@ const swaggerOptions = {
 };
 
 const app = hapi.server({
-  port,
-  routes: {
-    cors: true
-  }
+  port
 });
 
 app.route(routes);

@@ -50,8 +50,7 @@ exports.createExchangeRate = (req, h) => {
           baseCurrency === EURO ? rates[targetCurrency] : rates[targetCurrency] / rates[baseCurrency];
         return ExchangeRate.findOneAndUpdate(
           { baseCurrency, targetCurrency, isLastRateOfPair: true },
-          { isLastRateOfPair: false },
-          { useFindAndModify: false }
+          { isLastRateOfPair: false }
         ).then(() =>
           ExchangeRate.create({
             baseCurrency,

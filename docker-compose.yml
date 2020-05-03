@@ -1,0 +1,22 @@
+version: "2"
+services:
+  node:
+    container_name: node
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      DB_NAME: exchange-rates
+      DB_HOST: mongo
+      DB_PORT: 27017
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:4.0.18
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"

@@ -1,7 +1,6 @@
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 
-// eslint-disable-next-line global-require
-if (ENVIRONMENT !== 'production') require('dotenv').config();
+require('dotenv').config();
 
 const configFile = `./${ENVIRONMENT}`;
 

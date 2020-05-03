@@ -1,7 +1,7 @@
 {
-  "name": "rates-api-node",
+  "name": "exchange-rates-api-node",
   "version": "0.1.0",
-  "description": "API to manage currencies rates",
+  "description": "API to manage currencies exchange rates",
   "engines": {
     "node": "12.16.3",
     "npm": "6.14.4"
@@ -21,14 +21,14 @@
     "node_modules"
   ],
   "main": "app.js",
-  "homepage": "git@github.com:raparicio6/rates-api-node.git",
+  "homepage": "git@github.com:raparicio6/exchange-rates-api-node.git",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:raparicio6/rates-api-node.git.git"
+    "url": "git@github.com:raparicio6/exchange-rates-api-node.git.git"
   },
   "bugs": {
-    "url": "git@github.com:raparicio6/rates-api-node.git/issues"
+    "url": "git@github.com:raparicio6/exchange-rates-api-node.git/issues"
   },
   "jest": {
     "coverageThreshold": {
@@ -42,12 +42,9 @@
     "collectCoverageFrom": [
       "app/**/*.js",
       "!**/node_modules/**",
-      "!**/build/**",
+      "!**/data/**",
       "!**/config/**",
-      "!**/logger/**",
-      "!**/scripts/**",
-      "!**/errors.js",
-      "!**/schemaValidator.js"
+      "!**/logger.js**"
     ],
     "testEnvironment": "node",
     "transform": {
