@@ -45,5 +45,3 @@ exports.serializeExchangeRates = ({ docs, totalDocs, limit, page, totalPages, pr
   totalPages,
   totalExchangeRates: totalDocs
 });
-
-exports.serializeCurrencies = ({ symbols }) => ({ currencies: symbols });

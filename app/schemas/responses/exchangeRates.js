@@ -27,15 +27,3 @@ exports.getExchangeRatesRespSchema = Joi.object({
   totalPages: Joi.number().example(1),
   totalExchangeRates: Joi.number().example(1)
 });
-
-exports.getCurrenciesRespSchema = Joi.object({
-  currencies: Joi.object({
-    CON1: Joi.string().example('United Arab Emirates Dirham'),
-    CON2: Joi.string().example('Euro'),
-    CON3: Joi.string().example('Bitcoin')
-  }).unknown()
-});
-
-exports.healthCheckRespSchema = Joi.object({
-  uptime: Joi.number().example(7)
-});

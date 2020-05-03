@@ -35,15 +35,3 @@ exports.getExchangeRatesSchema = {
     [auth.headerName]: Joi.string()
   }).unknown()
 };
-
-exports.getCurrenciesSchema = {
-  headers: Joi.object({
-    [auth.headerName]: Joi.string()
-  }).unknown()
-};
-
-exports.healthCheckSchema = {
-  headers: Joi.object({
-    [auth.headerName]: Joi.string()
-  }).unknown()
-};

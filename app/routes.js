@@ -2,19 +2,16 @@ const { healthCheck } = require('./controllers/healthCheck');
 const { getExchangeRates, createExchangeRate } = require('./controllers/exchangeRates');
 const { getCurrencies } = require('./controllers/currencies');
 const { GET, POST } = require('./constants');
-const {
-  createExchangeRateSchema,
-  getExchangeRatesSchema,
-  getCurrenciesSchema,
-  healthCheckSchema
-} = require('./schemas/inputs/exchangeRates');
+const { createExchangeRateSchema, getExchangeRatesSchema } = require('./schemas/inputs/exchangeRates');
 const {
   createExchangeRateRespSchema,
-  getCurrenciesRespSchema,
   getExchangeRatesRespSchema,
-  healthCheckRespSchema,
   createExchangeInvalidCurrency
 } = require('./schemas/responses/exchangeRates');
+const { getCurrenciesSchema } = require('./schemas/inputs/currencies');
+const { healthCheckSchema } = require('./schemas/inputs/healthCheck');
+const { getCurrenciesRespSchema } = require('./schemas/responses/currencies');
+const { healthCheckRespSchema } = require('./schemas/responses/healthCheck');
 
 module.exports = [
   {

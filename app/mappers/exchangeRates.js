@@ -3,5 +3,3 @@ exports.mapFixerRespToExchangeRates = ({ base, date, rates }) => ({
   date,
   rates
 });
-
-exports.mapFixerRespToConcurrencies = ({ symbols }) => symbols;
