@@ -39,6 +39,10 @@ const config = {
     fixer: {
       apiBaseUrl: process.env.FIXER_API_BASE_URL,
       apiKey: process.env.FIXER_API_KEY
+    },
+    auth: {
+      headerName: 'api-key',
+      secret: process.env.API_KEY
     }
   }
 };

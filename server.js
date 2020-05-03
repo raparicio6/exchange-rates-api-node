@@ -4,4 +4,7 @@ const logger = require('./app/logger');
 
 Promise.resolve()
   .then(() => connectToDatabase().then(() => startApp()))
-  .catch(logger.error);
+  .catch(error => {
+    logger.error(error);
+    process.exit(1);
+  });
