@@ -29,20 +29,20 @@ Should be `localhost` by default
 `DB_PORT=<database port>`  
 Should be `27017` by default
 
-#### Starting app
+### Starting app
 
 We have two ways to start the app. To start it in production mode run `npm start` in the root path of the project. To start it in development mode (nodemon) run `npm run start-dev`. Then access the app at **localhost:port**. The port is logged in the console where you run the start script.  
 Also, you can start the app in production mode using [docker-compose](https://docs.docker.com/compose/install/). You just have to run `docker-compose up`.
 
-### Development
+## Development
 
-#### Environments
+### Environments
 
 By default, the environment will be **development**, but you can easily change it using the **NODE_ENV** environmental variable.
 
 #### Environment variables
 
-`Dotenv` is used for managing environment variables. They are stored in the `/.env` file. Take into account that the variables defined in the `bashrc` are not overrided.
+[Dotenv](https://www.npmjs.com/package/dotenv) is used for managing environment variables. They are stored in the `/.env` file. Take into account that the variables defined in the `bashrc` are not overrided.
 
 The environment variables should be added to the `.env` file in the form of `NAME=VALUE`, as the following example:
 
@@ -53,12 +53,12 @@ CLIENTS_API=http://api.clients.example.org/
 
 **Remember not to push nor commit the `.env` file.**
 
-#### Testing
+### Testing
 
 In order to execute the tests run `npm test`.  
 [Jest](https://jestjs.io/) was used as the testing framework.
 
-#### Documentation
+### Documentation
 
 Documentation will be served at `/documentation`. It is suggested to check it if you want to execute any request since it contains a **Try Out** option, which is much more comfortable than using other tools such as Postman.
 
