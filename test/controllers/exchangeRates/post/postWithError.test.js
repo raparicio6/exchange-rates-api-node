@@ -9,7 +9,7 @@ const {
 
 describe('POST /exchange_rates', () => {
   describe('Response with error', () => {
-    describe('Base concurrency does not exist respond with error', () => {
+    describe('Base concurrency does not exist', () => {
       let response = null;
       beforeAll(async done => {
         mockGetCurrencies();
@@ -36,7 +36,7 @@ describe('POST /exchange_rates', () => {
       });
     });
 
-    describe('Target concurrency does not exist respond with error', () => {
+    describe('Target concurrency does not exist', () => {
       let response = null;
       beforeAll(async done => {
         mockGetCurrencies();
@@ -63,7 +63,7 @@ describe('POST /exchange_rates', () => {
       });
     });
 
-    describe('Fixer respond with error in get currencies respond with error', () => {
+    describe('Fixer respond with error in get currencies', () => {
       let response = null;
       beforeAll(async done => {
         mockGetCurrenciesWithError();
@@ -90,7 +90,7 @@ describe('POST /exchange_rates', () => {
       });
     });
 
-    describe('Fixer respond with error in get exchange rates respond with error', () => {
+    describe('Fixer respond with error in get exchange rates', () => {
       let response = null;
       beforeAll(async done => {
         mockGetCurrencies();
@@ -118,7 +118,7 @@ describe('POST /exchange_rates', () => {
       });
     });
 
-    describe('Fixer unavailable respond with error', () => {
+    describe('Fixer unavailable', () => {
       let response = null;
       beforeAll(async done => {
         mockFixerServiceUnavailable();

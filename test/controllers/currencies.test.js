@@ -24,7 +24,7 @@ describe('GET /currencies', () => {
   });
 
   describe('Response with error', () => {
-    describe('Fixer respond with error respond with error', () => {
+    describe('Fixer respond with error', () => {
       let response = null;
       beforeAll(async done => {
         mockGetCurrenciesWithError();
@@ -43,7 +43,7 @@ describe('GET /currencies', () => {
       });
     });
 
-    describe('Fixer unavailable respond with error', () => {
+    describe('Fixer unavailable', () => {
       let response = null;
       beforeAll(async done => {
         mockFixerServiceUnavailable();
