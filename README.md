@@ -40,7 +40,7 @@ Also, you can start the app in production mode using [docker-compose](https://do
 
 By default, the environment will be **development**, but you can easily change it using the **NODE_ENV** environmental variable.
 
-#### Environment variables
+### Environment variables
 
 [Dotenv](https://www.npmjs.com/package/dotenv) is used for managing environment variables. They are stored in the `/.env` file. Take into account that the variables defined in the `bashrc` are not overrided.
 
