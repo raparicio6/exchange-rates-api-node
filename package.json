@@ -59,7 +59,7 @@
     "@hapi/joi": "^17.1.1",
     "@hapi/joi-date": "^2.0.1",
     "@hapi/vision": "^6.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express-wolox-logger": "^2.0.0",
     "hapi-swagger": "^13.0.0",
     "install": "^0.13.0",
